@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<!-- namespace 命名空间 早期版本是可选的 现在是必须的 可以是随意的名称 但是最好是全限定名称 -->
+<mapper namespace="com.bw.mapper.PlantMapperDao">
+
+	<select id="plantList" resultType="map" parameterType="map">
+		select
+		p.pid,p.pname,p.content,t.tname from plant p
+		left join type t on
+		p.tid = t.tid
+		<where>
+			<if test="pname != null and pname != ''">
+				and p.pname like concat('%',#{pname},'%')
+			</if>
+		</where>
+	</select>
+
+	<select id="typeList" resultType="type">
+		select * from type
+	</select>
+
+	<insert id="addPlant" parameterType="plant">
+		insert into plant
+		(pname,content,tid) values(#{pname},#{content},#{tid})
+	</insert>
+
+	<delete id="deleteAll">
+		delete from plant where pid in
+		<foreach collection="array" item="pid" open="(" separator=","
+			close=")">
+			#{pid}
+		</foreach>
+	</delete>
+
+	<delete id="delete" parameterType="int">
+		delete from plant where pid =
+		#{pid}
+	</delete>
+
+	<select id="getPlantByPid" parameterType="int" resultType="plant">
+		select * from plant where pid = #{pid}
+	</select>
+
+	<update id="updatePlant" parameterType="plant">
+		update plant set pname =
+		#{pname},content = #{content},tid = #{tid} where pid = #{pid}
+	</update>
+</mapper>
