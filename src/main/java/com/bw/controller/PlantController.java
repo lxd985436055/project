@@ -37,6 +37,7 @@ public class PlantController {
 		model.addAttribute("plantList", plantList);
 		model.addAttribute("map", map);
 		model.addAttribute("page", pageInfo);
+		model.addAttribute("page", pageInfo);
 		return "list";
 	}
 	
