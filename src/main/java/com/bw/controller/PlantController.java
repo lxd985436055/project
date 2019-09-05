@@ -49,8 +49,8 @@ public class PlantController {
 	@RequestMapping("getTypeList.do")
 	@ResponseBody
 	public Object getTypeList() {
-		List<Type> typeList = plantService.typeList();
-		return typeList;
+		List<Type> type = plantService.typeList();
+		return type;
 	}
 	
 	@RequestMapping("addPlant.do")
